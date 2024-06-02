@@ -14,6 +14,10 @@ A Django web application to query Open Brewery DB, view, and post reviews.
 * Django-admin for admin site.
 * Utilizes AWS RDS (PostgreSQL).
 
+## Configuring AWS RDS (Step-by-step)
+
+Adding shortly.
+
 ## Running the project locally
 
 ### Pre-requisites:
