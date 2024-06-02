@@ -1,0 +1,116 @@
+{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %}
+
+<style>
+    
+    input[type="file"] {
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 5px;
+}
+.ovvv {
+        word-break:break-all;
+        }
+input[type="file"]::file-selector-button {
+  background-color: #8B8BCD;
+  font-weight: bold;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #4747a1;
+}
+
+.avatar {
+  border: 3px solid #f8f9fa;
+  vertical-align: middle;
+  width: 135px;
+  height: 135px;
+  border-radius: 50%;
+}
+
+</style>
+
+    <br>
+    <br>
+    <br>
+    {% if messages %} {% for message in messages %}
+    
+    <div class="alert  alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <h5 class="alert-heading"> {{ message }} </h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>			
+    </div>
+    {% endfor %} {% endif %}
+    <br>
+    <br>
+    
+    
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card transparent">
+        <div class="card card-inverse-secondary">
+            <div class="card-body">
+
+                 
+                    
+                    
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-header bg-primary text-white"><h4>Profile</h4></div>
+
+                            <div class="card-body">
+                                <img id="myImg" class="avatar align-self-center mr-3" src="{{ user.profile.image.url }}" alt="user_profile_pic">
+                                <div id="myModal" class="imodal">
+                                    <span class="iclose">&times;</span>
+                                    <img class="imodal-content" id="img01">
+                                </div>
+                                <form class="forms-sample" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <fieldset class="form-group">
+                                      
+                                        {{ u_form|crispy }}
+                                        {{ p_form|crispy }}
+                
+                
+                                    </fieldset>
+                                    <button type="submit" class="btn btn-inverse-primary btn-md">Save changes</button>
+                                    <br>
+                                </form>   
+                                    
+                            </div>
+                            
+                        </div>
+                    </div>
+           
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var modal = document.getElementById("myModal");
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("img01");
+    img.onclick = function(){
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    }
+    
+    
+    var span = document.getElementsByClassName("iclose")[0];
+    
+    
+    span.onclick = function() {
+      modal.style.display = "none";
+    } 
+</script>
+
+{% endblock content %}

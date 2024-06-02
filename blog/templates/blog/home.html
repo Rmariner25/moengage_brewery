@@ -1,0 +1,93 @@
+{% extends "blog/base.html" %} {% block content %} {% load static %} 
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-md-10 col-12">
+        <form class="input-group" id="searchform" action="{% url 'search' %}" method="get">
+            <div class="input-group-prepend">
+                <select class="btn btn-primary msize" id="mySelect" name="select_option">
+                    <option value="" selected disabled>Search by</option>
+                    <option value="city">City</option>
+                    <option value="name">Name</option>
+                    <option value="type">Type</option>
+                </select>
+            </div>
+            <input class="form-control msize" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search for breweries" maxlength="50"/>
+            <div class="input-group-append">
+                <button class="btn btn-primary msize" title="Search" type="submit">
+                    <i class="ti-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+<br>
+<br>
+    <div class="row">
+    {% for brewery in page_obj.object_list %}
+        <div class="col-md-10 col-12 p-3">
+        <div class="card cardee bg-light">
+            <div class="card-body">
+                {% if brewery|length < 1 %}
+                <div class="row justify-content-center">
+                    <i class="h3 text-danger ti-alert"></i> <h3 class="text-danger">&nbsp;Something went wrong!</h3>
+                </div>
+                {% else %}
+                <a style="text-decoration: none;" class="text-primary stretched-link" href="{%url 'brewery' id=brewery.id %}"><h3>{{ brewery.name }}</h3></a>
+                <div class="p-2">
+                    <label class="badge badge-info font-weight-bold">Type: {{ brewery.brewery_type }}</label>
+                </div>
+                <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong class="text-primary">Address:</strong> {{ brewery.address_1 }}, {{ brewery.city }}, {{ brewery.state_province }}, {{ brewery.country }} - {{ brewery.postal_code }}</p>
+                {% if brewery.phone %}
+                <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong class="text-primary">Call:</strong> {{ brewery.phone }}</p> 
+                {% endif %}
+                {% if brewery.website_url %}
+                <a style="position: relative; z-index: 1;" href="{{ brewery.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world" ></i> Website</button></a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        </div>
+    
+        {% endfor %}
+    </div>
+    
+    <br>
+    
+    <div class="row">
+    <div class="col-12">
+    <div class="btn-group" role="group">
+    
+    {% if page_obj.has_previous %} {# whether the previous page exists #}
+    <a  href="?page=1"><button class="btn btn-inverse-primary btn-icon"> <i class="ti-angle-double-left"></i> </button> </a>
+    &nbsp;
+    <a  href="?page={{page_obj.previous_page_number}}"><button class="btn btn-inverse-primary btn-icon">{{page_obj.previous_page_number}}</button> </a>
+    &nbsp;
+{% endif %}
+<a href="?page={{ page_obj.number }}"><button class="btn btn-primary btn-icon">{{ page_obj.number }}</button></a>
+&nbsp;
+{%if page_obj.has_next %} {# whether the next page exists #}
+<a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-inverse-primary btn-icon">{{page_obj.next_page_number}}</button> </a>
+&nbsp;
+<a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-inverse-primary btn-icon"> <i class="ti-angle-double-right"></i> </button> </a>
+{% endif %}
+
+</div>
+</div>
+</div>
+
+
+
+<br>
+<br>
+       
+
+{% endblock content %}

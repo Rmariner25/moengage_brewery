@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<div class="jumbotron">
+    <h1>500 Internal Server Error</h1>
+    <h5 class="text-muted">Oops, something went wrong.</h5>
+    <hr class="my-4">
+    
+    
+      <a class="btn btn-primary btn-md" href="{% url 'blog-home' %}" role="button">BACK TO HOME  <i class="ti-angle-right"></i></a>
+ 
+  </div>
+
+{% endblock content %}

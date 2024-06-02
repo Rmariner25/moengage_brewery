@@ -1,0 +1,194 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> {% if title %}
+    <title>BrewFind &#8211; {{title}}</title>
+    {% else %}
+    <title>BrewFind</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'blog/vendors/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vertical-layout-light/style.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vertical-layout-light/custom.css' %}">
+    <link rel="shortcut icon" href="{% static 'blog/images/shmare.svg' %}" />
+    <link rel="stylesheet" href="{% static 'blog/vendors/mdi/css/materialdesignicons.min.css' %}">
+   
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+
+            <nav class="navbar col-lg-12 col-12 p-1 fixed-top d-flex flex-row">
+                <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+                    <a class="navbar-brand brand-logo mr-5" href="{% url 'blog-home' %}" style="text-decoration:none"><h3 class="text-primary"> <span><img style="width:50px; height:48px;"src="{% static 'blog/images/brand_logo.svg' %}" alt="logo" /></span> BrewFind</h3></a>
+                    <a class="navbar-brand brand-logo-mini" href="{% url 'blog-home' %}" style="text-decoration:none"><h3 class="text-primary"> <span><img style="width:50px; height:48px;"src="{% static 'blog/images/brand_logo.svg' %}" alt="logo" /> </h3></a>
+
+                </div>
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+
+                    <ul class="navbar-nav navbar-nav-right">
+
+
+                        {% if user.is_authenticated %}
+
+
+
+                        <li class="nav-item nav-profile dropdown">
+                            <button type="button" class="btn btn-light btn-icon btn-md nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown" aria-haspopup="true" aria-expanded="false">
+
+
+                            <img class="d-flex align-self-start mr-3" src="{{ user.profile.image.url }}" alt="user_profile_pic" />
+
+
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                &nbsp;
+                                <div class="media">
+                                    &nbsp; &nbsp; &nbsp;
+                                    <a href="{% url 'user-posts' user.username %}"><img class="d-flex align-self-start mr-3" src="{{ user.profile.image.url }}" alt="user_profile_pic"/></a>
+
+                                
+                                    <div class="media-body">
+
+                                        <h5 class="ovvv"> 
+                                        <a class="text-dark" href="{% url 'user-posts' user.username %}" style="text-decoration:none">{{ user.username|truncatechars:17 }}</a> 
+			
+					  </h5>
+
+                                        <h5 class="ovvv">
+                      <small class="text-muted">
+                        <a class="text-dark" href="{% url 'user-posts' user.username %}" style="text-decoration:none">{{ user.email|truncatechars:20 }}</a>
+                      </small>
+                    </h5>
+                </div>
+                &nbsp;
+                 &nbsp;
+                 &nbsp;
+              </div> 
+        &nbsp; 
+          <div class="dropdown-divider"></div>
+
+    
+          <a class="dropdown-item" href="{% url 'profile' %}">
+            <i class="ti-pencil text-primary"></i>
+            &nbsp; Edit Profile &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          </a>
+                        
+                                <div class="dropdown-divider"></div>
+                                <form method="POST" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                
+                               
+                                    <button class="dropdown-item" type="submit">
+                                        <i class="ti-shift-right text-primary"></i> &nbsp;&nbsp;Log out
+                                    </button>                          
+                           
+                              
+                                </form>
+                            
+                        </li>
+
+
+                        <li class="nav-item nav-profile dropdown">
+                            <button type="button" class="btn btn-light btn-icon btn-md nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown" aria-haspopup="true" aria-expanded="false">
+
+                                &nbsp;
+
+                                <i class="ti-menu"></i>
+
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+
+
+
+                                <a class="dropdown-item" href="{% url 'blog-home' %}">
+                                    <i class="ti-home text-primary"></i> &nbsp; Home &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </a>
+                                <a class="dropdown-item" href="{% url 'user-posts' user %}">
+                                    <i class="ti-export text-primary"></i> &nbsp; Your reviews &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </a>
+
+                            </div>
+                        </li>
+
+
+
+                        {% else %}
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %} ">
+                                <button type="button" class="btn btn-light btn-rounded btn-md">Log in</button>
+                            </a>
+
+                            &nbsp; &nbsp;
+
+
+                            <a class="nav-link" href="{% url 'register' %} ">
+                                <button type="button" class="btn btn-primary btn-rounded btn-md">Sign up</button>
+                            </a>
+
+                        </li>
+
+                        {% endif %}
+
+
+                    </ul>
+
+                </div>
+            </nav>
+
+            <div class="container my-bg">
+                {% if messages %} {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %} {% endif %} {% block content %} {% endblock %}
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <p class="text-primary">&copy; 2024 BrewFind</p>
+            <p class="text-primary"><a href="mailto:rakshitst25@outlook.com" target="_blank">Feedback&#47;Report Bugs</a> </p>
+        </div>
+    </footer>
+
+    </div>
+
+    </div>
+
+    </div>
+
+
+    <script src="{% static 'blog/vendors/js/vendor.bundle.base.js' %}"></script>
+
+    <script src="{% static 'blog/js/off-canvas.js' %}"></script>
+    <script src="{% static 'blog/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'blog/js/template.js' %}"></script>
+    <script src="{% static 'blog/js/settings.js' %}"></script>
+    <script src="{% static 'blog/js/todolist.js' %}"></script>
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>

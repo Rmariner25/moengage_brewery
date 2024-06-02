@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% load static %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<div class="jumbotron">
+    <h1>404 Error</h1>
+    <h5 class="text-muted">The page you were looking for could not be found.</h5>
+    <hr class="my-4">
+    
+    
+      <a class="btn btn-primary btn-md" href="{% url 'blog-home' %}" role="button">BACK TO HOME  <i class="ti-angle-right"></i></a>
+ 
+  </div>
+
+{% endblock content %}

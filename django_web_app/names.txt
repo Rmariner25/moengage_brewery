@@ -1,0 +1,3 @@
+object.author.profile.image.url
+post.author.profile.image.url
+user.profile.image.url

@@ -1,0 +1,133 @@
+
+   
+   .msize {
+    height:46px;
+   }
+   .mhover {
+    background-color: yellow;
+
+   }
+   .micons {
+  font-size: 24px; 
+  vertical-align: middle;
+  
+  
+}
+
+   .fsize {
+    font-size:20px;
+   }
+   .avatar_mini {
+       border: 1px solid #f8f9fa;
+       vertical-align: middle;
+       width: 42px;
+       height: 42px;
+       border-radius: 50%;
+   }
+   .ovvv {
+    word-break:break-all;
+    word-wrap: break-word;
+    }
+    
+    .cardee {
+    
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
+     
+    }
+    .iomg {
+     width: 38px;
+      height: 38px;
+      border-radius: 100%;
+    
+    }
+    
+    .xmz {
+    
+     font-size: 16.8px;
+     
+     
+     }
+    
+    .xmzd {
+    
+     font-size: 18px;
+     }
+    
+    hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #ced4da;
+    
+    }
+    
+    div.deedw {
+      line-height: 2.6;
+    }
+    .avatar {
+        border: 3px solid #f8f9fa;
+        vertical-align: middle;
+        width: 135px;
+        height: 135px;
+        border-radius: 50%;
+    }
+
+     /* Style the Image Used to Trigger the Modal */
+ #myImg {
+  cursor: pointer;
+ }
+  #myImg:hover {opacity: 0.8;}
+  
+  /* The Modal (background) */
+  .imodal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 200px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.80);/* Black w/ opacity */
+    
+    
+  }
+  
+  /* Modal Content (Image) */
+  .imodal-content {
+    margin: auto;
+    display: block;
+  }
+  
+  
+  
+  /* Add Animation - Zoom in the Modal */
+  .imodal-content {
+    animation-name: zoom;
+    
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .iclose {
+    position: absolute;
+    top: 80px;
+    right: 50px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .iclose:hover,
+  .iclose:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  

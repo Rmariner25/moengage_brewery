@@ -1,0 +1,63 @@
+{% extends "blog/base.html" %} {% block content %} {% load static %}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<div class="row">
+  
+      
+  <div class="col-md-12 grid-margin">
+    
+        <div class="card bg-light">
+        
+
+          <div class="card-body">
+              <img id="myImg" class="avatar align-self-center mr-3" src="{{ user.profile.image.url }}" alt="user_profile_pic">
+              <div id="myModal" class="imodal">
+                <span class="iclose">&times;</span>
+                <img class="imodal-content" id="img01">
+              </div>
+             <h4><strong>{{ user.username }}</strong></h4>
+              <p class="lead text-muted">{{ user.email }}</p>
+              {% if user.is_authenticated %}
+              <a class="btn btn-inverse-primary btn-sm" href="{% url 'profile' %}">Edit profile</a>
+              {% endif %}
+          </div> 
+      </div>
+      </div>
+         
+     
+
+	
+	</div>
+	<br>
+	<br>
+
+<br>
+
+<script>
+var modal = document.getElementById("myModal");
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+}
+
+
+var span = document.getElementsByClassName("iclose")[0];
+
+
+span.onclick = function() {
+  modal.style.display = "none";
+} 
+</script>
+	
+	
+{% endblock content %}
