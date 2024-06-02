@@ -14,7 +14,33 @@ A Django web application to query Open Brewery DB, view, and post reviews.
 * Django-admin for admin site.
 * Utilizes AWS RDS (PostgreSQL).
 
-## Configuring AWS RDS (Step-by-step)
+## Screenshots
+
+Brewery-details:
+
+![Brewery-details page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/details_page.jpg)
+<br>
+
+Search page (logged in):
+
+![Search page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/search_page.jpg) 
+<br>
+
+Home page:
+
+![Home page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/home_page.jpg) 
+<br>
+
+Profile page:
+
+![Profile page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/profile_page.jpg)
+<br>
+
+Sign-up page:
+
+![Sign-up page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/signup_page.jpg)
+<br>
+## Configuring AWS RDS 
 
 Adding shortly.
 
