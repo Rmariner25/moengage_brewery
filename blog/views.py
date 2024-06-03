@@ -1,25 +1,22 @@
 import re
+from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.http import Http404
 from django.utils.http import urlencode
+from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
 )
 import operator
 from django.urls import reverse_lazy
 from django.contrib.staticfiles.views import serve
 from django.http import HttpResponseRedirect
 from django.db.models import Q
-import qrcode
 from PIL import Image
-from io import BytesIO
-import base64
 from django.conf import settings
 import requests 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -49,30 +46,40 @@ def brewery(request, id):
 
     except UserReview.DoesNotExist:
         average_review = "No reviews"
+    try:
+        user_review = get_object_or_404(UserReview, breweryId=id, userName=request.user.username)
+        check_field_value = user_review.check_field
+    except Http404:
+        check_field_value=True
+
+    
+
     if request.method == 'POST':
         form = UserReviewForm(request.POST)
         rate_query=request.POST.get('rate')
-    
         if form.is_valid():
             form.instance.breweryId = id
             form.instance.userName = request.user.username
             form.instance.rate = rate_query
+            form.instance.check_field = False
             form.save()
-            context = {'brewery_data' : brewery_data, 'form' : form, 'message': 'Review saved successfully!', 'rating': average_review} 
-            return render(request, 'blog/brewery_details.html', context)
+            messages.success(request, 'Your review has been added successfully!')
+            return redirect(reverse('brewery', args=[id]))
+
     else:
         form = UserReviewForm()
     context = {
         'brewery_data' : brewery_data,
         'form' : form,
-        'rating': average_review
+        'rating': average_review,
+        'check' : check_field_value
     } 
     
     return render(request, 'blog/brewery_details.html', context)
 
 
 def br(request):
-    url = "https://api.openbrewerydb.org/v1/breweries?per_page=100"
+    url = "https://api.openbrewerydb.org/v1/breweries?per_page=200"
     header = {
     "Content-Type":"application/json",
     }
@@ -122,16 +129,14 @@ def search(request):
     header = {
     "Content-Type":"application/json",
     }
-    if query_option==None or query_option=="":
-        query_option="name"
-    else: 
-        pass
-    if query_option=="name":
-        url = "https://api.openbrewerydb.org/v1/breweries?by_name="+uquery+"&per_page=100"
+    if query_option==None or query_option=="search":
+        url= "https://api.openbrewerydb.org/v1/breweries/search?query="+uquery+"&per_page=200"
+    elif query_option=="name":
+        url = "https://api.openbrewerydb.org/v1/breweries?by_name="+uquery+"&per_page=200"
     elif query_option=="city":
-        url = "https://api.openbrewerydb.org/v1/breweries?by_city="+uquery+"&per_page=100"
+        url = "https://api.openbrewerydb.org/v1/breweries?by_city="+uquery+"&per_page=200"
     elif query_option=="type":
-        url = "https://api.openbrewerydb.org/v1/breweries?by_type="+uquery+"&per_page=100"
+        url = "https://api.openbrewerydb.org/v1/breweries?by_type="+uquery+"&per_page=200"
     
     results = requests.get(url,headers=header)
     if results.status_code == 200:

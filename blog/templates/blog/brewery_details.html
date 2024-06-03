@@ -48,14 +48,15 @@
     color: #c59b08;
 }
 
+  
 </style>
-{% if user.is_authenticated %}
+
 <div class="row">
     <div class="col-md-10 col-12">
         <form class="input-group" id="searchform" action="{% url 'search' %}" method="get">
             <div class="input-group-prepend">
-                <select class="btn btn-primary msize" id="mySelect" name="select_option">
-                    <option value="" selected disabled>Search by</option>
+                <select class="btn btn-primary msize" style="padding: 0 10px;" id="mySelect" name="select_option">
+                    <option value="search" selected>Search by</option>
                     <option value="city">City</option>
                     <option value="name">Name</option>
                     <option value="type">Type</option>
@@ -70,12 +71,24 @@
         </form>
     </div>
 </div>
-{% endif %}
+<br>
 
+{% if messages %} {% for message in messages %}
+<div class="row">
+<div class="col-md-8">
+<div class="alert  alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <h5 class="alert-heading"> {{ message }} </h5>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>			
+</div>
+</div>
+</div>
+{% endfor %} {% endif %}
 <br>
-<br>
+
     <div class="row">
-        <div class="col-md-10 col-12 p-3">
+        <div class="col-md-8 col-12 p-2">
         <div class="card bg-light">
             <div class="card-body">
                 {% if brewery_data == "Error" %}
@@ -86,16 +99,26 @@
                
                 <h3 class="text-primary">{{ brewery_data.name }}</h3>
                 <div class="p-2">
-                <label class="badge badge-info font-weight-bold">Type: {{ brewery_data.brewery_type }}</label>
-                <label class="badge badge-success font-weight-bold">Ratings: {{ rating|floatformat:1 }}</label>
+                {% if rating %}
+                <label style="font: size 0.8rem;" class="badge badge-success font-weight-bold">{{ rating|floatformat:1 }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                {% else %}
+                <label style="font-size:0.8rem;" class="badge badge-success font-weight-bold">No ratings yet</label>
+                 {% endif %}
+                 <small>{{ brewery_data.brewery_type|upper }} BREWERY</small>
                 </div>
+                
+                <iframe class="p-2" src="https://maps.google.com/maps?q={{ brewery_data.name }} {{ brewery_data.address_1 }}&output=embed" width="100%" height="285" frameborder="0" style="border:0" allowfullscreen></iframe>
+
                 <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong class="text-primary">Address:</strong> {{ brewery_data.address_1 }}, {{ brewery_data.city }}, {{ brewery_data.state_province }}, {{ brewery_data.country }} - {{ brewery_data.postal_code }}</p>
+                
                 {% if brewery_data.phone %}
                 <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong class="text-primary">Call:</strong> {{ brewery_data.phone }}</p> 
                 {% endif %}
+                <div class="d-flex justify-content-end">
                 {% if brewery_data.website_url %}
                 <a style="position: relative; z-index: 1;" href="{{ brewery_data.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world" ></i> Website</button></a>
                 {% endif %}
+                </div>
 
                 {% endif %}
             </div>
@@ -107,15 +130,16 @@
         </div>
         </div>
 
-        {% if user.is_authenticated %}
-            <div class="col-md-8">
+        {% if user.is_authenticated and check %}
+            <div class="col-md-4 col-12 p-2">
                 <div class="card bg-light">
                     <div class="card-header bg-primary text-white"><h5>Add a Review</h5></div>
-                    
-                    <div class="card-body">                        
-                        <form class="forms-sample" method="POST">
-
+                    <div class="card-body">                    
+                        <form class="forms-sample" method="POST" action="{%url 'brewery' id=brewery_data.id%}">
                             {% csrf_token %}
+                            <div class="row">
+                            <div class="col-md-10">
+                                <h5>Rate</h5>
                             <div class="rate">
                                 <input type="radio" id="star5" name="rate" value="5" required>
                                 <label for="star5" title="text">5 stars</label>
@@ -128,16 +152,20 @@
                                 <input type="radio" id="star1" name="rate" value="1" />
                                 <label for="star1" title="text">1 star</label>
                               </div>
-                            <br>
-                            <fieldset class="form-group">
+                            </div>
+                            
+                            </div>
+                            <div class="row">
+                            <div class="col-md-12">
+                            <h5>Provide a Detailed Review</h5>
+                            <fieldset>
                               
                                 {{ form|crispy }}
-                              
-        
-        
                             </fieldset>
-                            <button type="submit" class="btn btn-inverse-primary btn-sm">Submit Review</button>
+                            <button type="submit" class="btn btn-inverse-primary">Submit</button>
                             <br>
+                            </div>
+                            </div>
                         </form>   
                             
                     </div>
