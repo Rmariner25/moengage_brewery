@@ -9,9 +9,9 @@ A Django web application to query Open Brewery DB, view, and post reviews.
 
 * Users can query breweries based on by_city, by_type, and by_name params (provided they are logged in).
 * Users can post reviews.
+* Embedded Google maps for viewing and searching breweries 
 * Advance login features such as reset password/forgot password.
 * User can edit their profile.
-* Django-admin for admin site.
 * Utilizes AWS RDS (PostgreSQL).
 
 ## Screenshots
