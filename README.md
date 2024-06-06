@@ -7,21 +7,32 @@ A Django web application to query Open Brewery DB, view, and post reviews.
 
 ## Current features
 
-* Users can query breweries based on by_city, by_type, and by_name params (provided they are logged in).
-* Users can post reviews.
-* Embedded Google maps for viewing and searching breweries 
+* Users can query breweries by all, by_name, by_city, by_postal, and by_type params.
+* Search autocomplete feature.
+* Users can rate breweries and post reviews.
+* Google maps on brewery-details page
+* Caching breweries data and search results to optimize page response time.
 * Advance login features such as reset password/forgot password.
 * User can edit their profile.
-* Utilizes AWS RDS (PostgreSQL).
+
 
 ## Screenshots
 
-Brewery-details:
+Brewery-details page:
 
 ![Brewery-details page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/details_page.jpg)
 <br>
 
-Search page (logged in):
+Reviews section:
+![Reviews section](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/reviews_section.jpg)
+<br>
+
+Search-autocomplete:
+
+![Search-autocomplete](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/search_autocomplete.jpg)
+<br>
+
+Search page:
 
 ![Search page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/search_page.jpg) 
 <br>
@@ -34,6 +45,11 @@ Home page:
 Profile page:
 
 ![Profile page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/profile_page.jpg)
+<br>
+
+Login page:
+
+![Log-in page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/login_page.jpg)
 <br>
 
 Sign-up page:
