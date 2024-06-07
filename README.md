@@ -1,7 +1,7 @@
 # BrewFind - Django web application 
 
 
-[![MIT License](https://img.shields.io/github/license/Rmariner25/moengage_brewery)](https://github.com/Rmariner25/moengage_breweryp/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/github/license/Rmariner25/moengage_brewery)](https://github.com/Rmariner25/moengage_brewery/blob/main/LICENSE)
 
 A Django web application to query Open Brewery DB, view, and post reviews. 
 
