@@ -1,19 +1,14 @@
 # BrewFind - Django web application 
 
-
-[![MIT License](https://img.shields.io/github/license/Rmariner25/moengage_brewery)](https://github.com/Rmariner25/moengage_breweryp/blob/main/LICENSE)
-
-A Django web application to query Open Brewery DB, view, and post reviews. 
+A Django web application based on [Open Brewery DB](https://openbrewerydb.org/). 
 
 ## Current features
 
-* Users can query breweries by all, by_name, by_city, by_postal, and by_type params.
+* Users can query breweries by_name, by_city, by_postal, and by_type params.
 * Search autocomplete feature.
 * Users can rate breweries and post reviews.
 * Google maps on brewery-details page
 * Caching breweries data and search results to optimize page response time.
-* Advance login features such as reset password/forgot password.
-* User can edit their profile.
 
 
 ## Screenshots
