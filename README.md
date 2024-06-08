@@ -9,8 +9,6 @@ A Django web application based on [Open Brewery DB](https://openbrewerydb.org/).
 * Users can rate breweries and post reviews.
 * Google maps on brewery-details page
 * Caching breweries data and search results to optimize page response time.
-* Advance login features such as reset password/forgot password.
-* User can edit their profile.
 
 
 ## Screenshots
