@@ -4,7 +4,7 @@ A Django web application based on [Open Brewery DB](https://openbrewerydb.org/).
 
 ## Current features
 
-* Users can query breweries by all, by_name, by_city, by_postal, and by_type params.
+* Users can query breweries by_name, by_city, by_postal, and by_type params.
 * Search autocomplete feature.
 * Users can rate breweries and post reviews.
 * Google maps on brewery-details page
