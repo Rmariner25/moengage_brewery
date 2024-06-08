@@ -1,6 +1,6 @@
 # BrewFind - Django web application 
 
-A Django web application to query [Open Brewery DB](https://openbrewerydb.org/) and add reviews. 
+A Django web application based on [Open Brewery DB](https://openbrewerydb.org/). 
 
 ## Current features
 
