@@ -1,11 +1,10 @@
-
-
 import os
 import blog
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = #fill_in
+# secret key used in production should be hidden!
+SECRET_KEY = 'fill_here'
 
 # configure in production
 DEBUG = True
@@ -14,28 +13,28 @@ ALLOWED_HOSTS = ['*']
 
 HOST = os.environ.get("HOST", default="http://localhost:8000/")
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'fill_here'
 EMAIL_HOST_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = #fill_in
-EMAIL_HOST_PASSWORD = #fill_in
+EMAIL_HOST_USER = 'fill_here'
+EMAIL_HOST_PASSWORD = 'fill_here'
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
     'crispy_bootstrap4',
-    'qrcode',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     #'storages',  
     
 ]
+
 CSRF_TRUSTED_ORIGINS=['http://localhost', 'http://127.0.0.1']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,18 +67,17 @@ WSGI_APPLICATION = 'django_web_app.wsgi.application'
 
 HOST = os.environ.get("HOST", default="http://localhost:8000/")
 
-#AWS RDS: 
+# Configuring AWS RDS
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': #fill_in,
-        'USER' : #fill_in,
-        'PASSWORD' : #fill_in,
-        'HOST' : #fill_in,
-        'PORT' : #fill_in,
+        'ENGINE': 'fill_here',
+        'NAME': 'fill_here',
+        'USER' : 'fill_here',
+        'PASSWORD' : 'fill_here',
+        'HOST' : 'fill_here',
+        'PORT' : 'fill_here',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,13 +99,15 @@ PASSWORD_RESET_TIMEOUT = 3600
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'fill_here' # see django documentation 
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+# Configuring AWSS3
 """
 STORAGES = {
     "default" : {
@@ -123,6 +123,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'blog-home'
 LOGIN_URL = 'login'
+
+# Configuring AWSS3
+"""
+AWS_ACCESS_KEY_ID = 'fill_here'
+AWS_SECRET_ACCESS_KEY = 'fill_here'
+AWS_STORAGE_BUCKET_NAME = 'fill_here'
+AWS_S3_SIGNATURE_VERSION = 'fill_here'
+DEFAULT_FILE_STORAGE = 'fill_here'
+AWS_S3_REGION_NAME = 'fill_here'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.{region}.amazonaws.com'
+AWS_LOCATION = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+STATICFILES_STORAGE = 'blog.storage_backends.StaticStorage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+"""
+
 STATIC_URL = '/static/'
 STATIC_ROOT= os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

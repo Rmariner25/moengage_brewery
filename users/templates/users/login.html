@@ -23,7 +23,7 @@
                         <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                             <div class="brand-logo">
                             
-                            <a class="navbar-brand brand-logo mr-5" href="{% url 'blog-home' %}" style="text-decoration:none"><h3 class="text-primary"> <span><img style="width:50px; height:48px;"src="{% static 'blog/images/brand_logo.svg' %}" alt="logo" /></span> BrewFind</h3></a>
+                                <a href="{% url 'blog-home' %}" style="text-decoration:none"><strong><h3 class="text-primary"> <span><img style="width:50px; height:48px;"src="{% static 'blog/images/brand_logo.svg' %}" alt="logo" /></span> BrewFind</strong></h3></a>
 
 
                             </div>
@@ -31,11 +31,15 @@
 
                             <div>
                                 {% if messages %} {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    <i class="ti-check"></i> {{ message }}
+    
+                                <div class="alert  alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <h5 class="alert-heading"> {{ message }} </h5>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>			
                                 </div>
                                 {% endfor %} {% endif %}
-
+                                
                             </div>
 
                             <h3>Log in</h3>
@@ -71,9 +75,8 @@
         </div>
 
     </div>
-
+  
     <script src="{% static 'blog/vendors/js/vendor.bundle.base.js' %}"></script>
-
     <script src="{% static 'blog/js/off-canvas.js' %}"></script>
     <script src="{% static 'blog/js/hoverable-collapse.js' %}"></script>
     <script src="{% static 'blog/js/template.js' %}"></script>

@@ -2,7 +2,23 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.views import LoginView, PasswordResetView
 
+"""class CustomLoginView(LoginView):
+    def get(self, request, *args, **kwargs):
+        link_clicked = request.session.get('forgot-link')
+        if link_clicked == "true_forgot":
+            request.session['reset_clicked'] = True
+            print("Reset link clicked!")
+        else:
+            pass
+        return super().get(request, *args, **kwargs) 
+class CustomPasswordResetView(PasswordResetView):
+     def get(self, request, *args, **kwargs):
+        if request.session.get('reset_clicked') == True:
+            request.session['reset_clicked'] = False
+        else:
+            return redirect('login')"""
 
 def register(request):
     if request.method == 'POST':

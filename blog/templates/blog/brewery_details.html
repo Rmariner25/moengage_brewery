@@ -1,15 +1,8 @@
 {% extends "blog/base.html" %} {% block content %} {% load static %} {% load crispy_forms_tags %} 
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
 <style>
-    *{
-    margin: 0;
-    padding: 0;
+    
+label[for="id_description"] {
+    display: none;
 }
 
 .rate {
@@ -34,44 +27,23 @@
     content: '★ ';
 }
 .rate > input:checked ~ label {
-    color: #ffc700;    
+    color: #f9bb04;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+    color: #f9bb04;  
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
+    color: #f9bb04;
 }
 
-  
+    
 </style>
-
-<div class="row">
-    <div class="col-md-10 col-12">
-        <form class="input-group" id="searchform" action="{% url 'search' %}" method="get">
-            <div class="input-group-prepend">
-                <select class="btn btn-primary msize" style="padding: 0 10px;" id="mySelect" name="select_option">
-                    <option value="search" selected>Search by</option>
-                    <option value="city">City</option>
-                    <option value="name">Name</option>
-                    <option value="type">Type</option>
-                </select>
-            </div>
-            <input class="form-control msize" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search for breweries" maxlength="50"/>
-            <div class="input-group-append">
-                <button class="btn btn-primary msize" title="Search" type="submit">
-                    <i class="ti-search"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<br>
+{% include "blog/search_bar.html" %}
 
 {% if messages %} {% for message in messages %}
 <div class="row">
@@ -85,61 +57,69 @@
 </div>
 </div>
 {% endfor %} {% endif %}
-<br>
 
     <div class="row">
         <div class="col-md-8 col-12 p-2">
-        <div class="card bg-light">
+        <div class="card bg-light ovvv">
             <div class="card-body">
                 {% if brewery_data == "Error" %}
                 <div class="row justify-content-center">
                 <i class="h3 text-danger ti-alert"></i> <h3 class="text-danger">&nbsp;Something went wrong!</h3>
                 </div>
                 {% else %}
-               
-                <h3 class="text-primary">{{ brewery_data.name }}</h3>
+                <h3>{{ brewery_data.name }}</h3>
                 <div class="p-2">
                 {% if rating %}
-                <label style="font: size 0.8rem;" class="badge badge-success font-weight-bold">{{ rating|floatformat:1 }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                {% if rating >= 3.0 %}
+                <label style="font: size 0.8rem;" class="badge badge-success font-weight-bold text-white">{{ rating|floatformat:1 }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                {% elif rating < 3.0 and rating >= 2.0 %}
+                <label style="font: size 0.8rem;" class="badge badge-warning font-weight-bold text-white">{{ rating|floatformat:1 }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                {% elif rating < 2.0 and rating >= 1.0 %}
+                <label style="font: size 0.8rem;" class="badge badge-danger font-weight-bold text-white">{{ rating|floatformat:1 }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                {% endif %}
+
                 {% else %}
-                <label style="font-size:0.8rem;" class="badge badge-success font-weight-bold">No ratings yet</label>
+                <label style="font-size:0.8rem;" class="badge badge-secondary font-weight-bold text-white">- <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
                  {% endif %}
-                 <small>{{ brewery_data.brewery_type|upper }} BREWERY</small>
+                 <a style="text-decoration: none;" href="#reviews_section"><span style="font-size:0.9rem;" class="text-info">{{ num_reviews }} ratings</span></a> 
+                 <span class="text-muted">|</span>
+                 {% if brewery_data.brewery_type == "closed" %}
+                 <strong style="font-size:0.8rem;" class="text-danger">{{ brewery_data.brewery_type|upper }}</strong>
+                 {% else %}
+                 <span style="font-size:0.8rem;" class="text-muted">{{ brewery_data.brewery_type|upper }}</span>
+                 {% endif %}
+                {% if brewery_data.brewery_type in brewery_type %}
+                 <span style="font-size:0.8rem;" class="text-muted"> BREWERY</span>
+                {% endif %}
                 </div>
                 
                 <iframe class="p-2" src="https://maps.google.com/maps?q={{ brewery_data.name }} {{ brewery_data.address_1 }}&output=embed" width="100%" height="285" frameborder="0" style="border:0" allowfullscreen></iframe>
 
-                <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong class="text-primary">Address:</strong> {{ brewery_data.address_1 }}, {{ brewery_data.city }}, {{ brewery_data.state_province }}, {{ brewery_data.country }} - {{ brewery_data.postal_code }}</p>
+                <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong>Address:</strong> {{ brewery_data.address_1 }}, {{ brewery_data.city }}, {{ brewery_data.state_province }}, {{ brewery_data.country }} - {{ brewery_data.postal_code }}</p>
                 
                 {% if brewery_data.phone %}
-                <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong class="text-primary">Call:</strong> {{ brewery_data.phone }}</p> 
+                <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong>Call:</strong> {{ brewery_data.phone }}</p> 
                 {% endif %}
                 <div class="d-flex justify-content-end">
                 {% if brewery_data.website_url %}
-                <a style="position: relative; z-index: 1;" href="{{ brewery_data.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world" ></i> Website</button></a>
+                <a style="position: relative; z-index: 1;" href="{{ brewery_data.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world p-1" style="vertical-align: middle;" ></i> Website</button></a>
                 {% endif %}
                 </div>
 
                 {% endif %}
             </div>
-            
-
-
-
-
         </div>
         </div>
-
         {% if user.is_authenticated and check %}
             <div class="col-md-4 col-12 p-2">
-                <div class="card bg-light">
-                    <div class="card-header bg-primary text-white"><h5>Add a Review</h5></div>
+                <div class="card">
+                    <div class="card-header bg-light"><h4 style="font-weight:700">Add a Review</h4></div>
                     <div class="card-body">                    
-                        <form class="forms-sample" method="POST" action="{%url 'brewery' id=brewery_data.id%}">
+                        <form class="forms-sample" id="myForm" method="POST">
                             {% csrf_token %}
                             <div class="row">
                             <div class="col-md-10">
-                                <h5>Rate</h5>
+                                <h5>Rate *</h5>
                             <div class="rate">
                                 <input type="radio" id="star5" name="rate" value="5" required>
                                 <label for="star5" title="text">5 stars</label>
@@ -153,16 +133,18 @@
                                 <label for="star1" title="text">1 star</label>
                               </div>
                             </div>
-                            
+                            {% if error_review %}
+                            <p class="text-danger">{{ error_review}}</p>
+                            {% endif %}
                             </div>
                             <div class="row">
                             <div class="col-md-12">
-                            <h5>Provide a Detailed Review</h5>
+                            <h5>Write your Review *</h5>
                             <fieldset>
                               
                                 {{ form|crispy }}
                             </fieldset>
-                            <button type="submit" class="btn btn-inverse-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             <br>
                             </div>
                             </div>
@@ -174,14 +156,58 @@
             </div>
             {% endif %}
 
-    
     </div>
-    
     <br>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+        <br>
+        <h4 id="reviews_section" style="font-weight:700">User Reviews</h4>
+        <br>
+        </div>
+    </div>
+        <div class="row">
+            {% if user_reviews %}
+            {% for review in user_reviews %}
+            <div class="col-md-8">
+    
+                    <div class="media">
+                        <a href="#"><img class="avatar_mini d-flex align-self-start mr-3" src="{{ review.userId.profile.image.url }}" alt="user_profile_pic"></a>
+                        <div class="media-body">
+                            <h5><a class="text-dark ovvv" href="#"  style="text-decoration:none">{{ review.userName|truncatechars:22 }}</a></h5>
+                            <h4><small class="text-muted">{{ review.created_at|time:"g:i a" }} <strong>&#183;</strong> {{ review.created_at|date:"F d, Y" }} </small></h4>
+                        </div>
+                    </div>
+
+                    <div class="p-2">
+                        {% if review.rate %}
+                        {% if review.rate >= 3 %}
+                        <label style="font: size 0.8rem;" class="badge badge-success font-weight-bold text-white">{{ review.rate }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                        {% elif review.rate < 3 and review.rate >= 2 %}
+                        <label style="font: size 0.8rem;" class="badge badge-warning font-weight-bold text-white">{{ review.rate }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                        {% elif review.rate < 2 and review.rate >= 1 %}
+                        <label style="font: size 0.8rem;" class="badge badge-danger font-weight-bold text-white">{{ review.rate }} <i style="font-size:0.8rem;vertical-align:middle;" class="mdi mdi-star"></i></label>
+                        {% endif %}
+                        {% else %}
+                        <label style="font-size:0.8rem;" class="badge badge-secondary font-weight-bold text-white">No ratings</label>
+                         {% endif %}
+                         <p class="ovvv">{{ review.description}}</p>
+                        </div>
+                    <hr>           
+                
+        
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="p-2">No reviews yet.</p>
+            {% endif %}
     
     
+        </div>
+
+    
+    
+<br>  
 <br>
 <br>
-
-
 {% endblock content %}

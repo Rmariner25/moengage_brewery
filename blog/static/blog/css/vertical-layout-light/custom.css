@@ -10,10 +10,11 @@
    .micons {
   font-size: 24px; 
   vertical-align: middle;
-  
-  
 }
-
+ 
+  .menu_padding {
+  padding-left:235px;
+  }
    .fsize {
     font-size:20px;
    }
@@ -96,6 +97,8 @@
   /* Modal Content (Image) */
   .imodal-content {
     margin: auto;
+    width: 325px;
+    height: 325px;
     display: block;
   }
   

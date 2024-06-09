@@ -1,0 +1,132 @@
+{% load static %} 
+
+
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+}
+
+.cdropdown {
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  margin-top: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #ffffff;
+  max-height: 450px; 
+  overflow-y: auto;
+  border-top: none;
+  border-radius: 15px;
+}
+
+
+.cdropdown li {
+  cursor: pointer;
+  padding: 8px;
+}
+
+
+.cdropdown li:hover {
+  background-color: #ddd;
+}
+
+#searchResults {
+  list-style-type: none;
+}
+
+#searchResults li {
+  cursor: pointer;
+  padding-bottom: 6px;
+  padding-left: 30px;
+}
+
+#searchResults li:hover {
+  background-color: #f0f0f0;
+}
+  
+</style>
+
+
+<div class="row">
+    <div class="col-md-10 col-12">
+        <form class="input-group" id="searchform" action="{% url 'search' %}" method="get">
+            <div class="input-group-prepend">
+                <select class="btn btn-primary msize" style="padding: 0 15px;" id="mySelect" name="select_option">
+                    <option value="default" hidden selected>Search by</option>
+                    <option value="all">All</option>
+                    <option value="name">Name</option>
+                    <option value="city">City</option>
+                    <option value="postal_code">Postal Code</option>
+                    <option value="type">Type</option>
+                </select>
+            </div>
+            <input class="form-control msize" id="searchInput" autocomplete="off" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search..." maxlength="200" required/>
+            <div class="input-group-append">
+                <button class="btn btn-primary msize" title="Search" type="submit">
+                    <i class="ti-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-9">
+    <ul class="cardee cdropdown" id="searchResults">
+
+    </ul>
+    </div>
+</div>
+<br>
+<br>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchForm = document.getElementById('searchform');
+    const selectOption = document.getElementById('mySelect');
+    searchInput.addEventListener('input', function() {
+    const query = searchInput.value.trim();
+    if (query.length > 0) {
+        fetch(`https://api.openbrewerydb.org/v1/breweries/autocomplete?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayResults(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    } else {
+        searchResults.innerHTML = '';
+    }
+});
+searchResults.addEventListener('click', function(event) {
+    const selectedText = event.target.textContent;
+    searchInput.value = selectedText;
+    searchResults.innerHTML = ''; // Clear the dropdown
+    searchForm.submit();
+});
+function displayResults(data) {
+    searchResults.innerHTML = '';
+    data.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item.name;
+        searchResults.appendChild(li);
+    });
+}
+    
+var temp = "{{ query_option }}";
+    var mySelect = document.getElementById('mySelect');
+    
+    for(var i, j = 0; i = mySelect.options[j]; j++) {
+        if(i.value == temp) {
+            mySelect.selectedIndex = j;
+            break;
+        }
+    }
+
+</script>

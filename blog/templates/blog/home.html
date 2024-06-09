@@ -1,57 +1,32 @@
 {% extends "blog/base.html" %} {% block content %} {% load static %} 
 
+{% include "blog/search_bar.html" %}
 
-<br>
-<br>
-<br>
-<br>
-<br>
-{% if user.is_authenticated %}
-<div class="row">
-    <div class="col-md-10 col-12">
-        <form class="input-group" id="searchform" action="{% url 'search' %}" method="get">
-            <div class="input-group-prepend">
-                <select class="btn btn-primary msize" id="mySelect" name="select_option">
-                    <option value="" selected disabled>Search by</option>
-                    <option value="city">City</option>
-                    <option value="name">Name</option>
-                    <option value="type">Type</option>
-                </select>
-            </div>
-            <input class="form-control msize" type="text" name="q" value="{{ request.GET.q }}" placeholder="Search for breweries" maxlength="50"/>
-            <div class="input-group-append">
-                <button class="btn btn-primary msize" title="Search" type="submit">
-                    <i class="ti-search"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-{% endif %}
-
-<br>
-<br>
     <div class="row">
+    {% if results %}
+        <div class="row justify-content-start">
+        <div class="col-12">
+        <lead class="p-3"><a style="text-decoration: none;" class="text-dark" href="{% url 'blog-home' %}">Home</a> <strong><i class="text-primary ti-angle-right"></i> <span class="text-primary">Breweries</span></strong></lead>
+        </div>
+        <div class="col-12"> 
+            <br>       
+        </div>
+        </div>
     {% for brewery in page_obj.object_list %}
         <div class="col-md-10 col-12 p-3">
-        <div class="card cardee bg-light">
+        <div class="card cardee ovvv">
             <div class="card-body">
-                {% if brewery|length < 1 %}
-                <div class="row justify-content-center">
-                    <i class="h3 text-danger ti-alert"></i> <h3 class="text-danger">&nbsp;Something went wrong!</h3>
-                </div>
-                {% else %}
-                <a style="text-decoration: none;" class="text-primary stretched-link" href="{%url 'brewery' id=brewery.id %}"><h3>{{ brewery.name }}</h3></a>
-                <div class="p-2">
-                    <label class="badge badge-info font-weight-bold">Type: {{ brewery.brewery_type }}</label>
-                </div>
-                <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong class="text-primary">Address:</strong> {{ brewery.address_1 }}, {{ brewery.city }}, {{ brewery.state_province }}, {{ brewery.country }} - {{ brewery.postal_code }}</p>
+                {% if brewery %}
+                <a style="text-decoration: none;" class="text-dark stretched-link" href="{%url 'brewery' id=brewery.id %}"><strong><h4>{{ brewery.name }}</h4></strong></a>
+                <p><i class="micons text-primary mdi mdi-map-marker p-2" ></i><strong>Address:</strong> {{ brewery.address_1 }}, {{ brewery.city }}, {{ brewery.state_province }}, {{ brewery.country }} - {{ brewery.postal_code }}</p>
                 {% if brewery.phone %}
-                <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong class="text-primary">Call:</strong> {{ brewery.phone }}</p> 
+                <p><i class="micons text-primary mdi mdi-phone p-2" ></i><strong>Call:</strong> {{ brewery.phone }}</p> 
                 {% endif %}
+                <div class="d-flex justify-content-end">
                 {% if brewery.website_url %}
-                <a style="position: relative; z-index: 1;" href="{{ brewery.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world" ></i> Website</button></a>
+                <a style="position: relative; z-index: 1;" href="{{ brewery.website_url }}" target="_blank"><button class="btn btn-inverse-primary btn-sm"><i class="ti-world p-1" style="vertical-align: middle;" ></i> Website</button></a>
                 {% endif %}
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -66,26 +41,40 @@
     <div class="col-12">
     <div class="btn-group" role="group">
     
-    {% if page_obj.has_previous %} {# whether the previous page exists #}
-    <a  href="?page=1"><button class="btn btn-inverse-primary btn-icon"> <i class="ti-angle-double-left"></i> </button> </a>
-    &nbsp;
-    <a  href="?page={{page_obj.previous_page_number}}"><button class="btn btn-inverse-primary btn-icon">{{page_obj.previous_page_number}}</button> </a>
-    &nbsp;
-{% endif %}
-<a href="?page={{ page_obj.number }}"><button class="btn btn-primary btn-icon">{{ page_obj.number }}</button></a>
-&nbsp;
-{%if page_obj.has_next %} {# whether the next page exists #}
-<a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-inverse-primary btn-icon">{{page_obj.next_page_number}}</button> </a>
-&nbsp;
-<a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-inverse-primary btn-icon"> <i class="ti-angle-double-right"></i> </button> </a>
-{% endif %}
+    {% if page_obj.has_previous and page_obj.number >= 5 %}
+      <a  href="?page=1"><button type="submit" class="btn btn-inverse-primary btn-icon">1</i> </button> </a>
+	  <p style="font-size:1.5rem;" class="p-2">...</p>
+     
+	  {% elif page_obj.has_previous and page_obj.number == 4 %}
+      <a  href="?page=1"><button type="submit" class="btn btn-inverse-primary btn-icon">1</i> </button> </a>&nbsp;
+      {% endif %}
 
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a href="?page={{ num }}"><button type="submit" class="btn btn-primary btn-icon">{{ num }}</button></a>
+		  &nbsp;
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+		
+          <a href="?page={{ num }}"><button type="submit" class="btn btn-inverse-primary btn-icon">{{ num }}</button></a>
+		  &nbsp;
+		  
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}"><button type="submit" class="btn btn-inverse-primary btn-icon"> <i class="ti-angle-right"></i> </button> </a>
+       &nbsp;
+      {% endif %}
+  
 </div>
 </div>
 </div>
 
-
-
+{% else %}
+<div class="row justify-content-center">
+    <i class="h3 text-danger ti-alert"></i> <h3 class="text-danger">&nbsp;Something went wrong!</h3>
+    </div>
+    {% endif %}
 <br>
 <br>
        

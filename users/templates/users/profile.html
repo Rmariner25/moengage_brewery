@@ -1,30 +1,36 @@
-{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %}
+
+{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %} {% load static %}
 
 <style>
-    
-    input[type="file"] {
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    padding: 5px;
-}
 .ovvv {
         word-break:break-all;
         }
-input[type="file"]::file-selector-button {
-  background-color: #8B8BCD;
-  font-weight: bold;
-  color: #fff;
-  padding: 10px 20px;
+input[type='file'] {
+  color: transparent;
   border: none;
-  border-radius: 20px;
   cursor: pointer;
-  transition: background-color .3s ease;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 100px;
+  left: 100px;
 }
 
-input[type="file"]::file-selector-button:hover {
-  background-color: #4747a1;
+input[type="file"]::file-selector-button {
+  background-color: transparent;
+  background-image: url( "{% static 'blog/images/edit_img.svg' %}" );
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  color: transparent;
+  font-size:30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
 }
-
+.av_cont {
+  position: relative;
+  display: inline-block;
+}
 .avatar {
   border: 3px solid #f8f9fa;
   vertical-align: middle;
@@ -32,12 +38,22 @@ input[type="file"]::file-selector-button:hover {
   height: 135px;
   border-radius: 50%;
 }
+label[for="id_image"] {
+    display: none;
+}
 
+
+.edit-icon {
+  position: absolute;
+  bottom: 10px; 
+  right: 10px; 
+  width: 30px; 
+  height: 30px; 
+  z-index: 1; 
+}
 </style>
 
-    <br>
-    <br>
-    <br>
+
     {% if messages %} {% for message in messages %}
     
     <div class="alert  alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -47,25 +63,18 @@ input[type="file"]::file-selector-button:hover {
         </button>			
     </div>
     {% endfor %} {% endif %}
-    <br>
-    <br>
     
-    
-
 
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card transparent">
-        <div class="card card-inverse-secondary">
-            <div class="card-body">
-
-                 
-                    
-                    
-                    <div class="col-md-6">
-                        <div class="card bg-light">
+        <div class="card bg-light">
+            <div class="card-body">   
+                    <div class="col-md-5">
+                        <div class="card">
                             <div class="card-header bg-primary text-white"><h4>Profile</h4></div>
 
                             <div class="card-body">
+                               <span class="av_cont">
                                 <img id="myImg" class="avatar align-self-center mr-3" src="{{ user.profile.image.url }}" alt="user_profile_pic">
                                 <div id="myModal" class="imodal">
                                     <span class="iclose">&times;</span>
@@ -73,14 +82,12 @@ input[type="file"]::file-selector-button:hover {
                                 </div>
                                 <form class="forms-sample" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <fieldset class="form-group">
-                                      
-                                        {{ u_form|crispy }}
-                                        {{ p_form|crispy }}
-                
-                
-                                    </fieldset>
-                                    <button type="submit" class="btn btn-inverse-primary btn-md">Save changes</button>
+                                <fieldset class="form-group">
+                                   {{ p_form|crispy }}
+                                </span>
+                                    {{ u_form|crispy }}
+                                </fieldset>
+                                    <button type="submit" class="btn btn-primary btn-md">Save changes</button>
                                     <br>
                                 </form>   
                                     
