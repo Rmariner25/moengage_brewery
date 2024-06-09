@@ -69,11 +69,7 @@ Adding shortly.
    git clone https://github.com/Rmariner25/django_web_app.git
    ```
   
-2. Then cd into the folder `django_web_app`(base directory):
-
-   ```bash
-   cd django_web_app
-   ```
+2. Then cd into the project folder (base directory)
 
 3. Install virtual environment and activate it:
 * For Windows:
@@ -95,7 +91,7 @@ Adding shortly.
    pip install -r requirements.txt
    ```
   
-5. Run the development server:</li>
+5. Edit `settings.py` inside `django_web_app` folder and run the development server:
 
    ```bash
    python manage.py runserver
@@ -105,7 +101,7 @@ Adding shortly.
 
 ### Superuser:
 
-7. To log into admin at http://127.0.0.1:8000/admin create a super user:
+7. To log as admin at http://127.0.0.1:8000/admin create a super user:
 
    ```bash
    python manage.py createsuperuser
