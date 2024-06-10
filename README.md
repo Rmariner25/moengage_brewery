@@ -57,11 +57,11 @@ Adding shortly.
 
 ## Running the project locally
 
-### Pre-requisites:
+### Pre-requisites
 
 * Make sure you have [Python 3](https://www.python.org/downloads/) and pip installed on your system.
 
-### Steps:
+### Steps
 
 1. First, clone the repository to your local machine: 
   
@@ -99,9 +99,9 @@ Adding shortly.
 
 6. Now, copy the url http://127.0.0.1:8000 and paste it in your web browser's address bar. 
 
-### Superuser:
+### Superuser
 
-7. To log as admin at http://127.0.0.1:8000/admin create a super user:
+7. To log-in as admin at http://127.0.0.1:8000/admin create a super user:
 
    ```bash
    python manage.py createsuperuser
