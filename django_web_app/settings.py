@@ -70,12 +70,11 @@ HOST = os.environ.get("HOST", default="http://localhost:8000/")
 # Configuring AWS RDS
 DATABASES = {
     'default': {
-        'ENGINE': 'fill_here',
-        'NAME': 'fill_here',
-        'USER' : 'fill_here',
-        'PASSWORD' : 'fill_here',
-        'HOST' : 'fill_here',
-        'PORT' : 'fill_here',
+
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR + 'db.sqlite3',
+        
+        
     }
 }
 
@@ -99,13 +98,15 @@ PASSWORD_RESET_TIMEOUT = 3600
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'fill_here' # see django documentation 
+TIME_ZONE = 'utc' # see django documentation 
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+SITE_ID = 1
 
 # Configuring AWSS3
 """

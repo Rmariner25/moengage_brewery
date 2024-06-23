@@ -1,4 +1,6 @@
+import requests
 import re
+
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -18,7 +20,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Q
 from PIL import Image
 from django.conf import settings
-import requests 
+ 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from .forms import UserReviewForm

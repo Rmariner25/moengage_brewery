@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('blog', '0001_initial'),
     ]
+    '''
 
     operations = [
         migrations.RenameField(
@@ -16,3 +17,4 @@ class Migration(migrations.Migration):
             new_name='rate',
         ),
     ]
+'''

@@ -19,17 +19,14 @@ Brewery-details page:
 <br>
 
 Reviews section:
-![Reviews section](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/reviews_section.jpg)
+![Reviews section](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/reviews.png)
 <br>
 
-Search-autocomplete:
 
-![Search-autocomplete](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/search_autocomplete.jpg)
-<br>
 
 Search page:
 
-![Search page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/search_page.jpg) 
+![Search page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/brew_list.png) 
 <br>
 
 Home page:
@@ -39,7 +36,7 @@ Home page:
 
 Profile page:
 
-![Profile page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/profile_page.jpg)
+![Profile page](https://github.com/Rmariner25/moengage_brewery/blob/main/Screenshots/profile.png)
 <br>
 
 Login page:
